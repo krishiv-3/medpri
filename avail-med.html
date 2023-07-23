@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+    crossorigin="anonymous"></script>
+
+    <script>
+        function doPrev(refFile,prevImg)
+        {
+            const [file] = refFile.files
+            if (file) {
+              prevImg.src = URL.createObjectURL(file)
+            }
+        }
+        $(document).ready(function(){
+          var au=localStorage.getItem("activeKuch");
+      // alert(au);
+      $("#txtEmail").val(au).prop("readonly",true);
+            $("#avail").click(function () {
+        var emailKu = $("#txtEmail").val();
+        var MNKu = $("#txtMedName").val();
+        var expKu = $("#txtExp").val();
+        var packKu = $("#txtPacking").val();
+        var qtyKu = $("#txtQty").val();
+        // alert();
+
+        var obj = {
+          type: "get",
+          url: "/avail-process",
+          data: {
+            kuchEmail: emailKu,
+             kuchMedName:MNKu,
+             kuchExp:expKu,
+             kuchPack:packKu,
+             kuchQty:qtyKu
+          }
+        }
+        $.ajax(obj).done(function (respKuch) {
+          // alert(respKuch);
+          $("#availmed").html(respKuch);
+
+        }).fail(function (errKuch) {
+          // alert(errKuch);
+          $("#availmed").html(respKuch);
+
+        })
+
+
+      });
+        })
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow  mb-5 bg-body-tertiary ">
+    
+    
+          <div class="container-fluid">
+            <div class="col-md-3">
+            <a class="navbar-brand" href="#">
+              <img src="pics/logo.png" alt="Bootstrap" width="50" height="50">
+            </a>
+            <a class="navbar-brand " href="#">Medicine Prithvi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <center><img src="pics/avail medicine.png" alt=""></center>
+<div class="container">
+  
+    <form class="row g-3" enctype="multipart/form-data" method="get" >
+      
+        <!-- <h3>Medicine Details </h3> -->
+        <div class="col-md-9">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" name="txtEmail" id="txtEmail"> 
+        </div>
+          
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Med. Name</label>
+          <input type="text" class="form-control" name="txtMedName" id="txtMedName">
+        </div>
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Exp. Date</label>
+            <input type="date" class="form-control" name="txtExp" id="txtExp">
+          </div>
+          
+        
+      
+       
+          <div class="col-md-4">
+            <label for="inputZip" class="form-label">Packing Type</label>
+            <select class="form-select" name="txtPacking" id="txtPacking">
+                <option selected>Choose...</option>
+                <option value="bottle">Bottles</option>
+                <option value="Sachet Packing">Sachet Packing</option>
+                <option value="Strip Packing">Strip Packing</option>
+              </select>
+          </div>
+          <div class="col-md-2">
+            <label for="inputPassword4" class="form-label">Quanity</label>
+            <input type="number" class="form-control" name="txtQty" id="txtQty">
+          </div>
+          
+          
+          
+        
+        <div class="col-md-11">
+          <button type="button" class="btn btn-primary" formaction="/avail-process"  id="avail">Avail Med.</button>
+          <span id="availmed"></span>
+        </div>
+    
+      </form>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
